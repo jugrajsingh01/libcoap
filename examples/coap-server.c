@@ -317,7 +317,11 @@ hnd_get_fetch_time(coap_resource_t *resource,
         coap_pdu_set_code(response, COAP_RESPONSE_CODE_NOT_FOUND);
         return;
       } else {
-        len = strftime((char *)buf, sizeof(buf), "%b %d %H:%M:%S", tmp);
+        //Print epoch time to measure latency
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        unsigned long long epoch = (unsigned long long)(tv.tv_sec) * 1000 +(unsigned long long)(tv.tv_usec) / 1000;
+        printf("%llu\n", epoch);
       }
     }
     coap_pdu_set_code(response, COAP_RESPONSE_CODE_CONTENT);
